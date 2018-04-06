@@ -53,6 +53,15 @@ export function renderBatch(browserRendererId: number, batch: RenderBatchPointer
     const componentId = platform.readInt32Field(componentIdPtr);
     browserRenderer.disposeComponent(componentId);
   }
+
+  const disposedEventHandlerIds = renderBatchStruct.disposedEventHandlerIds(batch);
+  const disposedEventHandlerIdsLength = arrayRange.count(disposedEventHandlerIds);
+  const disposedEventHandlerIdsArray = arrayRange.array(disposedEventHandlerIds);
+  for (let i = 0; i < disposedEventHandlerIdsLength; i++) {
+    const eventHandlerIdPtr = platform.getArrayEntryPtr(disposedEventHandlerIdsArray, i, 4);
+    const eventHandlerId = platform.readInt32Field(eventHandlerIdPtr);
+    browserRenderer.disposeEventHandler(eventHandlerId);
+  }
 }
 
 function clearElement(element: Element) {

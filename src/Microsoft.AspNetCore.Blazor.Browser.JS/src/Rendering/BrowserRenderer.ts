@@ -35,6 +35,10 @@ export class BrowserRenderer {
     delete this.childComponentLocations[componentId];
   }
 
+  public disposeEventHandler(eventHandlerId: number) {
+    this.eventDelegator.removeListener(eventHandlerId);
+  }
+
   private attachComponentToElement(componentId: number, element: Element) {
     this.childComponentLocations[componentId] = element;
   }

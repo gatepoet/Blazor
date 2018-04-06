@@ -9,16 +9,10 @@ export class EventDelegator {
   private eventsCollectionKey: string;
   private boundGlobalEventHandlerInstance: EventListener = evt => this.onGlobalEvent(evt);
 
-  // The delegator registers one document-level event listener for each distinct event name.
-  // Currently it never gets unregistered, which is not a problem in typical scenarios
-  // because there are only a small number of standard DOM event names and if your app
-  // uses one, it's likely to keep using it. However in the future if we wanted, we could
-  // track the active delegated events by event name and remove the global listener if
-  // none were left for a given name. It's not trivial because we would also need to
-  // index them by componentId so all the listeners for a given component could be removed
-  // when that component was disposed. However if people end up using programmatically
-  // -generated event names, doing that would be necessary to avoid leaking memory.
-  private globalListenersByEventName: { [eventName: string]: boolean } = {};
+  private activeEventHandlersById: { [eventHandlerId: number]: EventHandlerInfo } = {};
+
+  // Also index first by event name, so we can track whether any handlers remain for a given event name
+  private activeEventHandlersByEventName: { [eventName: string]: { [eventHandlerId: number]: EventHandlerInfo } } = {};
 
   constructor(private onEvent: OnEventCallback) {
     const eventDelegatorId = ++EventDelegator.nextEventDelegatorId;
@@ -30,15 +24,23 @@ export class EventDelegator {
     this.setEventHandlerInfo(element, eventName, componentId, eventHandlerId);
   }
 
-  public removeListener(element: Element, eventName: string) {
-    this.removeEventHandlerInfo(element, eventName);
+  public removeListener(eventHandlerId: number) {
+    const info = this.activeEventHandlersById[eventHandlerId];
+    if (info) {
+      this.removeEventHandler(info);
+    }
   }
 
   private ensureHasGlobalListener(eventName: string) {
-    if (!this.globalListenersByEventName.hasOwnProperty(eventName)) {
-      this.globalListenersByEventName[eventName] = true;
+    if (!this.activeEventHandlersByEventName.hasOwnProperty(eventName)) {
+      this.activeEventHandlersByEventName[eventName] = {};
       document.addEventListener(eventName, this.boundGlobalEventHandlerInstance);
     }
+  }
+
+  private removeGlobalListener(eventName: string) {
+    delete this.activeEventHandlersByEventName[eventName];
+    document.removeEventListener(eventName, this.boundGlobalEventHandlerInstance);
   }
 
   private onGlobalEvent(evt: Event) {
@@ -68,28 +70,54 @@ export class EventDelegator {
   }
 
   private setEventHandlerInfo(element: Element, eventName: string, componentId: number, eventHandlerId: number) {
+    const handlersForEventName = this.activeEventHandlersByEventName[eventName];
+
     // Ensure we're tracking event info about this element
     const infoForElement = this.getOrCreateEventHandlerInfos(element);
 
     // As a very minor optimization, update the existing EventHandlerInfo instance if there is one
     if (infoForElement.hasOwnProperty(eventName)) {
-      // An element can't change from one component to another, so no need to update that property
-      infoForElement[eventName].eventHandlerId = eventHandlerId;
+      // We can remove the old event handler ID from the index, but there's no need to go through
+      // any bigger disposal process because we're about to add a new handler in its place
+      const handlerInfo = infoForElement[eventName];
+      const oldEventHandlerId = handlerInfo.eventHandlerId;
+      delete handlersForEventName[oldEventHandlerId];
+      delete this.activeEventHandlersById[oldEventHandlerId];
+
+      // The only value that can change is eventHandlerId, so just update that
+      handlerInfo.eventHandlerId = eventHandlerId;
+      handlersForEventName[eventHandlerId] = handlerInfo;
+      this.activeEventHandlersById[eventHandlerId] = handlerInfo;
     } else {
-      infoForElement[eventName] = { componentId, eventHandlerId };
+      const handlerInfo = { element, eventName, componentId, eventHandlerId };
+      infoForElement[eventName] = handlerInfo;
+      handlersForEventName[eventHandlerId] = handlerInfo;
+      this.activeEventHandlersById[eventHandlerId] = handlerInfo;
     }
   }
 
-  private removeEventHandlerInfo(element: Element, eventName: string) {
-    if (element.hasOwnProperty(this.eventsCollectionKey)) {
-      const infoForElement = element[this.eventsCollectionKey];
-      if (infoForElement.hasOwnProperty(eventName)) {
-        delete infoForElement[eventName];
+  private removeEventHandler(info: EventHandlerInfo) {
+    // Remove it from the by-event-ID index
+    const eventHandlerId = info.eventHandlerId;
+    delete this.activeEventHandlersById[eventHandlerId];
 
-        // If there are no more events tracked for this element, we can delete its eventInfos
-        if (Object.getOwnPropertyNames(infoForElement).length === 0) {
-          delete element[this.eventsCollectionKey];
-        }
+    // Remove it from the by-event-name index, and possibly remove the global listener if it was the last one
+    const eventName = info.eventName;
+    const handlersForEventName = this.activeEventHandlersByEventName[eventName];
+    if (handlersForEventName) {
+      delete handlersForEventName[eventHandlerId];
+      if (Object.getOwnPropertyNames(handlersForEventName).length === 0) {
+        this.removeGlobalListener(eventName);
+      }
+    }
+
+    // Remove the associated data from the DOM element
+    const element = info.element;
+    if (element.hasOwnProperty(this.eventsCollectionKey)) {
+      const elementEventInfos: EventHandlerInfosForElement = element[this.eventsCollectionKey];
+      delete elementEventInfos[eventName];
+      if (Object.getOwnPropertyNames(elementEventInfos).length === 0) {
+        delete element[this.eventsCollectionKey];
       }
     }
   }
@@ -104,17 +132,18 @@ export class EventDelegator {
 }
 
 interface EventHandlerInfosForElement {
-  // We only support having a single event handler for a given event name per element.
-  // That's because the programming model is that you declare event handlers as attributes, and
-  // elements can only have one attribute with a given name. This is not really a limitation
-  // because:
-  // [1] Even if EventDelegator handled multiple handlers per { element, eventName }, there
-  //     would be no way to apply them
-  // [2] You can always wrap any number of actions in a single event handler
+  // Although we *could* track multiple event handlers per (element, eventName) pair
+  // (since they have distinct eventHandlerId values), there's no point doing so because
+  // our programming model is that you declare event handlers as attributes. An element
+  // can only have one attribute with a given name, hence only one event handler with
+  // that name at any one time.
+  // So to keep things simple, only track one EventHandlerInfo per (element, eventName)
   [eventName: string]: EventHandlerInfo
 }
 
 interface EventHandlerInfo {
+  element: Element;
+  eventName: string;
   componentId: number;
   eventHandlerId: number;
 }
