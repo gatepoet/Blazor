@@ -12,8 +12,8 @@ export class BrowserRenderer {
   constructor(private browserRendererId: number) {
   }
 
-  public attachComponentToElement(componentId: number, element: Element) {
-    this.childComponentLocations[componentId] = element;
+  public attachRootComponentToElement(componentId: number, element: Element) {
+    this.attachComponentToElement(componentId, element);
   }
 
   public updateComponent(componentId: number, edits: System_Array<RenderTreeEditPointer>, editsOffset: number, editsLength: number, referenceFrames: System_Array<RenderTreeFramePointer>) {
@@ -27,6 +27,10 @@ export class BrowserRenderer {
 
   public disposeComponent(componentId: number) {
     delete this.childComponentLocations[componentId];
+  }
+
+  private attachComponentToElement(componentId: number, element: Element) {
+    this.childComponentLocations[componentId] = element;
   }
 
   private applyEdits(componentId: number, parent: Element, childIndex: number, edits: System_Array<RenderTreeEditPointer>, editsOffset: number, editsLength: number, referenceFrames: System_Array<RenderTreeFramePointer>) {
