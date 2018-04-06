@@ -29,7 +29,7 @@ export class BrowserRenderer {
     delete this.childComponentLocations[componentId];
   }
 
-  applyEdits(componentId: number, parent: Element, childIndex: number, edits: System_Array<RenderTreeEditPointer>, editsOffset: number, editsLength: number, referenceFrames: System_Array<RenderTreeFramePointer>) {
+  private applyEdits(componentId: number, parent: Element, childIndex: number, edits: System_Array<RenderTreeEditPointer>, editsOffset: number, editsLength: number, referenceFrames: System_Array<RenderTreeFramePointer>) {
     let currentDepth = 0;
     let childIndexAtCurrentDepth = childIndex;
     const maxEditIndexExcl = editsOffset + editsLength;
@@ -91,7 +91,7 @@ export class BrowserRenderer {
     }
   }
 
-  insertFrame(componentId: number, parent: Element, childIndex: number, frames: System_Array<RenderTreeFramePointer>, frame: RenderTreeFramePointer, frameIndex: number): number {
+  private insertFrame(componentId: number, parent: Element, childIndex: number, frames: System_Array<RenderTreeFramePointer>, frame: RenderTreeFramePointer, frameIndex: number): number {
     const frameType = renderTreeFrame.frameType(frame);
     switch (frameType) {
       case FrameType.element:
@@ -113,7 +113,7 @@ export class BrowserRenderer {
     }
   }
 
-  insertElement(componentId: number, parent: Element, childIndex: number, frames: System_Array<RenderTreeFramePointer>, frame: RenderTreeFramePointer, frameIndex: number) {
+  private insertElement(componentId: number, parent: Element, childIndex: number, frames: System_Array<RenderTreeFramePointer>, frame: RenderTreeFramePointer, frameIndex: number) {
     const tagName = renderTreeFrame.elementName(frame)!;
     const newDomElement = tagName === 'svg' || parent.namespaceURI === 'http://www.w3.org/2000/svg' ?
       document.createElementNS('http://www.w3.org/2000/svg', tagName) :
@@ -135,7 +135,7 @@ export class BrowserRenderer {
     }
   }
 
-  insertComponent(parent: Element, childIndex: number, frame: RenderTreeFramePointer) {
+  private insertComponent(parent: Element, childIndex: number, frame: RenderTreeFramePointer) {
     // Currently, to support O(1) lookups from render tree frames to DOM nodes, we rely on
     // each child component existing as a single top-level element in the DOM. To guarantee
     // that, we wrap child components in these 'blazor-component' wrappers.
@@ -162,13 +162,13 @@ export class BrowserRenderer {
     this.attachComponentToElement(childComponentId, containerElement);
   }
 
-  insertText(parent: Element, childIndex: number, textFrame: RenderTreeFramePointer) {
+  private insertText(parent: Element, childIndex: number, textFrame: RenderTreeFramePointer) {
     const textContent = renderTreeFrame.textContent(textFrame)!;
     const newDomTextNode = document.createTextNode(textContent);
     insertNodeIntoDOM(newDomTextNode, parent, childIndex);
   }
 
-  applyAttribute(componentId: number, toDomElement: Element, attributeFrame: RenderTreeFramePointer) {
+  private applyAttribute(componentId: number, toDomElement: Element, attributeFrame: RenderTreeFramePointer) {
     const attributeName = renderTreeFrame.attributeName(attributeFrame)!;
     const browserRendererId = this.browserRendererId;
     const eventHandlerId = renderTreeFrame.attributeEventHandlerId(attributeFrame);
@@ -223,7 +223,7 @@ export class BrowserRenderer {
     }
   }
 
-  tryApplyValueProperty(element: Element, value: string | null) {
+  private tryApplyValueProperty(element: Element, value: string | null) {
     // Certain elements have built-in behaviour for their 'value' property
     switch (element.tagName) {
       case 'INPUT':
@@ -257,7 +257,7 @@ export class BrowserRenderer {
     }
   }
 
-  insertFrameRange(componentId: number, parent: Element, childIndex: number, frames: System_Array<RenderTreeFramePointer>, startIndex: number, endIndexExcl: number): number {
+  private insertFrameRange(componentId: number, parent: Element, childIndex: number, frames: System_Array<RenderTreeFramePointer>, startIndex: number, endIndexExcl: number): number {
     const origChildIndex = childIndex;
     for (let index = startIndex; index < endIndexExcl; index++) {
       const frame = getTreeFramePtr(frames, index);
