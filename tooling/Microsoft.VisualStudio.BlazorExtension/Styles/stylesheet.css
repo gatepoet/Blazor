@@ -1,0 +1,349 @@
+﻿/* Reset
+***************************************************************/
+
+body
+{
+    overflow: auto;
+}
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strong, sub, sup, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td, header, footer
+{
+    -ms-high-contrast-adjust: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: inherit;
+    vertical-align: baseline;
+}
+
+:focus
+{
+    outline: 0;
+}
+
+ol, ul
+{
+    list-style: none;
+}
+
+table
+{
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+caption, th, td
+{
+    text-align: left;
+    font-weight: normal;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after
+{
+    content: "";
+}
+
+blockquote, q
+{
+    quotes: "" "";
+}
+
+/* HTML 5 elements as block */
+header, footer, aside, nav, section, article
+{
+    display: block;
+}
+
+
+/* General
+***************************************************************/
+
+html, body
+{
+    font-family: "Segoe UI", Arial, sans-serif; /*[{plugin-font-family, Arial, sans-serif}]*/
+    font-size: 9pt; /*[{plugin-font-size}]*/
+    background-color: magenta; /*[{overview-body-background}]*/
+    color: magenta; /*[{overview-body}]*/
+}
+
+/* Typography
+***************************************************************/
+
+/* Headings */
+h1, h2, h3, h4, h5, h6
+{
+    font-weight: 100;
+    margin: 0;
+}
+
+h1
+{
+    font-size: 2.6em;
+    color: magenta; /*[{overview-h1}]*/
+}
+
+h2
+{
+    font-size: 1.5em;
+}
+
+h3
+{
+    font-size: 1.5em;
+}
+
+h4
+{
+    font-size: 1.3em;
+}
+
+h5
+{
+    font-size: 1.3em;
+}
+
+h6
+{
+    font-size: 1.2em;
+}
+
+.subtitleText
+{
+    font-size: 1.3em;
+    font-weight: 300;
+}
+
+.sectionHeader, .contentSectionHeader
+{
+    font-size: 1.5em;
+}
+
+a, a:link
+{
+    color: magenta; /*[{overview-hyperlink}]*/
+    text-decoration: none;
+}
+
+a:hover
+{
+    color: magenta; /*[{overview-hyperlink-hover}]*/
+    text-decoration: underline;
+}
+
+a:active
+{
+    color: magenta; /*[{overview-hyperlink-active}]*/
+    text-decoration: none;
+}
+
+a:focus
+{
+    outline: thin dotted;
+}
+
+/* Floats and Clearing Floats
+***************************************************************/
+
+.group:after
+{
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clear
+{
+    clear: both;
+}
+
+/* Lists 
+***************************************************************/
+
+ul.disc
+{
+    list-style-type: disc;
+}
+
+ul.square
+{
+    list-style-type: square;
+}
+
+ol.decimal
+{
+    list-style-type: decimal;
+}
+
+li
+{
+    display: block;
+    margin: 6px 0;
+    padding: 4px 0 4px 4px;
+    border: 1px solid transparent;
+}
+
+li.listActionEnhanced
+{
+    padding-left: 24px;
+    background-position: 4px 6px;
+    background-repeat: no-repeat;
+    background-image: url(images/Add_16x.png); /*[url({overview-image-add})]*/
+}
+
+li.genericAdd
+{
+    background-image: url(images/Add_16x.png); /*[url({overview-image-add})]*/
+}
+
+li.azure
+{
+    background-image: url(images/Azure_blue_16x.png); /*[url({overview-image-azure-blue})]*/
+}
+
+li.appInsights
+{
+    background-image: url(images/ApplicationInsights_16x.png); /*[url({overview-image-application-insights})]*/
+}
+
+li.nuget
+{
+    background-image: url(images/nuGet_16x.png); /*[url({overview-image-nuget})]*/
+}
+
+li.video
+{
+    background-image: url(images/PlayVideo_16x.png); /*[url({overview-image-play-video})]*/
+}
+
+li.deploy
+{
+    background-image: url(images/Deploy_16x.png); /*[url({overview-image-deploy})]*/
+}
+
+li.allServices
+{
+    background-image: url(images/allServices_16x.png); /*[url({overview-image-all-services})]*/
+}
+
+li.publish
+{
+    background-image: url(images/PublishAllWebsite_16x.png); /*[url({overview-image-publish})]*/
+}
+
+li.test
+{
+    background-image: url(images/Test_16x.png); /*[url({overview-image-test})]*/
+}
+
+li.repository
+{
+    background-image: url(images/Repository_16x.png); /*[url({overview-image-repository})]*/
+}
+
+li.data
+{
+    background-image: url(images/StackedLineChart_16x.png); /*[url({overview-image-data})]*/
+}
+
+li.package
+{
+    background-image: url(images/Package_16x.png); /*[url({overview-image-package})]*/
+}
+
+li.numberedListItem div
+{
+    display: inline-block;
+    height: 18px;
+    width: 18px;
+    margin: 0 4px 0 0;
+    text-align: center;
+    line-height: 16px;
+    color: magenta; /*[{overview-numbered-list-item}]*/
+    background-color: magenta; /*[{overview-numbered-list-item-background}]*/
+    border-radius: 50%;
+}
+
+li.numberedListItem:hover, li.listAction:hover, li.listActionEnhanced:hover
+{
+    background-color: magenta; /*[{overview-numbered-list-item-hover-background}]*/
+    border-color: magenta; /*[{overview-numbered-list-item-hover-border}]*/
+    cursor: pointer;
+}
+
+li.numberedListItem:active, li.listAction:active, li.listActionEnhanced:active
+{
+    background-color: magenta; /*[{overview-numbered-list-item-active-background}]*/
+    border-color: magenta; /*[{overview-numbered-list-item-active-border}]*/
+    color: magenta; /*[{overview-numbered-list-item-active}]*/
+    cursor: pointer;
+}
+
+
+/* Structure
+***************************************************************/
+
+#wrapper
+{
+    margin: 30px 0 0 0;
+}
+
+#content
+{
+    margin: -12px 0 0 84px;
+    float: left;
+    min-width: 1020px;
+}
+
+/* Sections */
+
+.contentSection
+{
+    width: 300px;
+    font-size: 1.2em;
+    margin: 30px 40px 20px 0;
+    float: left;
+}
+
+.contentSectionImage
+{
+    display: block;
+    margin: 0 auto;
+    width: 66px;
+    height: 66px;
+}
+
+.contentSectionHeader
+{
+    display: block;
+    text-align: center;
+    font-weight: 400;
+    color: magenta; /*[{overview-content-section-header}]*/
+    padding-bottom: 20px;
+    border-bottom: 1px solid magenta; /*[1px solid {overview-content-section-header-border}]*/
+}
+
+.contentSectionDescription
+{
+    display: block;
+    font-weight: 600;
+    margin: 20px 0 0px 4px;
+}
+
+.contentSectionList
+{
+    margin: 15px 0 0 0;
+}

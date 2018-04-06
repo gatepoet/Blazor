@@ -86,6 +86,13 @@
   <Target Name="CopySymbolsToOutput" AfterTargets="Build" Condition="'$(SymbolsPublishDir)' != ''">
     <Copy SourceFiles="$(OutDir)$(AssemblyName).pdb" DestinationFolder="$(SymbolsPublishDir)" />
   </Target>
+  <!-- Sensible defaults for Content -->
+  <ItemDefinitionGroup>
+    <Content>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+  </ItemDefinitionGroup>
   <!--
     We should be really careful about what goes into the VSIX and what doesn't. Since we're using
     P2P references and packages, there are some things we need to exclude.
@@ -193,6 +200,28 @@
       <FileWrites Include="$(_GeneratedVSIXAssemblyInfoFile)" />
     </ItemGroup>
   </Target>
+  <!-- Content for designer tab -->
+  <ItemGroup>
+    <Content Include="default.html" />
+    <Content Include="overview_manifest.json" />
+    <Content Include="images\Add_16x.png" />
+    <Content Include="images\allServices_16x.png" />
+    <Content Include="images\ApplicationInsights_16x.png" />
+    <Content Include="images\azure.png" />
+    <Content Include="images\Azure_blue_16x.png" />
+    <Content Include="images\code.png" />
+    <Content Include="images\Deploy_16x.png" />
+    <Content Include="images\nuGet_16x.png" />
+    <Content Include="images\Package_16x.png" />
+    <Content Include="images\PlayVideo_16x.png" />
+    <Content Include="images\PublishAllWebsite_16x.png" />
+    <Content Include="images\Repository_16x.png" />
+    <Content Include="images\services.png" />
+    <Content Include="images\StackedLineChart_16x.png" />
+    <Content Include="images\Test_16x.png" />
+    <Content Include="Scripts\plugin.js" />
+    <Content Include="Styles\stylesheet.css" />
+  </ItemGroup>
   <!--
   
     END INTERESTING STUFF 
@@ -229,6 +258,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.ScriptedHost">
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio\Preview\Enterprise\Common7\IDE\PrivateAssemblies\Microsoft.VisualStudio.ScriptedHost.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TabDesigner">
+      <HintPath>C:\Users\rynowak\Desktop\Microsoft.VisualStudio.TabDesigner.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.CoreUtility" Version="15.6.27413" />
     <PackageReference Include="Microsoft.VisualStudio.Imaging" Version="15.6.27413" />
     <PackageReference Include="Microsoft.VisualStudio.OLE.Interop" Version="7.10.6071" />
@@ -250,6 +287,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutDialogInfoAttribute.cs" />
+    <Compile Include="BlazorOverviewTabProvider.cs" />
     <Compile Include="BlazorPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -307,6 +345,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <!-- Must be defined after the CSharp.targets -->

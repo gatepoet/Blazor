@@ -1,0 +1,147 @@
+﻿{
+  "start_url": "default.html",
+  "domain": "http://microsoft.com",
+  "name": "DaytonaDialogPlugin",
+  "version": "1.0",
+  "vs": {
+    "theme_token_aliases": {
+      "overview-body": {
+        "category": "c8887ac6-3c60-4209-9d69-8f4c12a60044",
+        "key_type": "ForegroundColor",
+        "name": "Body"
+      },
+      "overview-body-background": {
+        "category": "c8887ac6-3c60-4209-9d69-8f4c12a60044",
+        "key_type": "BackgroundColor",
+        "name": "Body"
+      },
+      "overview-h1": {
+        "category": "c8887ac6-3c60-4209-9d69-8f4c12a60044",
+        "key_type": "ForegroundColor",
+        "name": "H1"
+      },
+      "overview-hyperlink": {
+        "category": "c8887ac6-3c60-4209-9d69-8f4c12a60044",
+        "key_type": "ForegroundColor",
+        "name": "Hyperlink"
+      },
+      "overview-hyperlink-hover": {
+        "category": "c8887ac6-3c60-4209-9d69-8f4c12a60044",
+        "key_type": "ForegroundColor",
+        "name": "HyperlinkHover"
+      },
+      "overview-hyperlink-active": {
+        "category": "c8887ac6-3c60-4209-9d69-8f4c12a60044",
+        "key_type": "ForegroundColor",
+        "name": "HyperlinkActive"
+      },
+      "overview-numbered-list-item": {
+        "category": "c8887ac6-3c60-4209-9d69-8f4c12a60044",
+        "key_type": "ForegroundColor",
+        "name": "NumberedListItem"
+      },
+      "overview-numbered-list-item-background": {
+        "category": "c8887ac6-3c60-4209-9d69-8f4c12a60044",
+        "key_type": "BackgroundColor",
+        "name": "NumberedListItem"
+      },
+      "overview-numbered-list-item-hover-background": {
+        "category": "c8887ac6-3c60-4209-9d69-8f4c12a60044",
+        "key_type": "BackgroundColor",
+        "name": "NumberedListItemHover"
+      },
+      "overview-numbered-list-item-hover-border": {
+        "category": "c8887ac6-3c60-4209-9d69-8f4c12a60044",
+        "key_type": "ForegroundColor",
+        "name": "NumberedListItemHoverBorder"
+      },
+      "overview-numbered-list-item-active": {
+        "category": "c8887ac6-3c60-4209-9d69-8f4c12a60044",
+        "key_type": "ForegroundColor",
+        "name": "NumberedListItemActive"
+      },
+      "overview-numbered-list-item-active-background": {
+        "category": "c8887ac6-3c60-4209-9d69-8f4c12a60044",
+        "key_type": "BackgroundColor",
+        "name": "NumberedListItemActive"
+      },
+      "overview-numbered-list-item-active-border": {
+        "category": "c8887ac6-3c60-4209-9d69-8f4c12a60044",
+        "key_type": "ForegroundColor",
+        "name": "NumberedListItemActiveBorder"
+      },
+      "overview-content-section-header": {
+        "category": "c8887ac6-3c60-4209-9d69-8f4c12a60044",
+        "key_type": "ForegroundColor",
+        "name": "ContentSectionHeader"
+      },
+      "overview-content-section-header-border": {
+        "category": "c8887ac6-3c60-4209-9d69-8f4c12a60044",
+        "key_type": "ForegroundColor",
+        "name": "ContentSectionHeaderBorder"
+      }
+    },
+    "themed_images": {
+      "overview-image-add": {
+        "bitmap_source": "images\\Add_16x.png",
+        "background_color": "overview-body-background"
+      },
+      "overview-image-azure-blue": {
+        "bitmap_source": "images\\Azure_blue_16x.png",
+        "background_color": "overview-body-background"
+      },
+      "overview-image-application-insights": {
+        "bitmap_source": "images\\ApplicationInsights_16x.png",
+        "background_color": "overview-body-background"
+      },
+      "overview-image-nuget": {
+        "bitmap_source": "images\\nuGet_16x.png",
+        "background_color": "overview-body-background"
+      },
+      "overview-image-play-video": {
+        "bitmap_source": "images\\PlayVideo_16x.png",
+        "background_color": "overview-body-background"
+      },
+      "overview-image-deploy": {
+        "bitmap_source": "images\\Deploy_16x.png",
+        "background_color": "overview-body-background"
+      },
+      "overview-image-all-services": {
+        "bitmap_source": "images\\allServices_16x.png",
+        "background_color": "overview-body-background"
+      },
+      "overview-image-publish": {
+        "bitmap_source": "images\\PublishAllWebsite_16x.png",
+        "background_color": "overview-body-background"
+      },
+      "overview-image-test": {
+        "bitmap_source": "images\\Test_16x.png",
+        "background_color": "overview-body-background"
+      },
+      "overview-image-repository": {
+        "bitmap_source": "images\\Repository_16x.png",
+        "background_color": "overview-body-background"
+      },
+      "overview-image-data": {
+        "bitmap_source": "images\\StackedLineChart_16x.png",
+        "background_color": "overview-body-background"
+      },
+      "overview-image-package": {
+        "bitmap_source": "images\\Package_16x.png",
+        "background_color": "overview-body-background"
+      },
+      "overview-image-code": {
+        "bitmap_source": "images\\code.png",
+        "background_color": "overview-body-background"
+      },
+      "overview-image-services": {
+        "bitmap_source": "images\\services.png",
+        "background_color": "overview-body-background"
+      },
+      "overview-image-azure": {
+        "bitmap_source": "images\\azure.png",
+        "background_color": "overview-body-background"
+      }
+    }
+  }
+}
