@@ -72,7 +72,8 @@ export class BrowserRenderer {
           break;
         }
         case EditType.removeAttribute: {
-          // TODO: Cover removing event handlers
+          // Note that we don't have to dispose the info we track about event handlers here, because the
+          // disposed event handler IDs are delivered separately (in the 'disposedEventHandlerIds' array)
           const siblingIndex = renderTreeEdit.siblingIndex(edit);
           removeAttributeFromDOM(parent, childIndexAtCurrentDepth + siblingIndex, renderTreeEdit.removedAttributeName(edit)!);
           break;
